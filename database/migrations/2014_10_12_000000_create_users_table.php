@@ -24,9 +24,12 @@ class CreateUsersTable extends Migration
             $table->boolean('active')->default(1);
             $table->string('last_seen_version', 20)->nullable();
             $table->timestamp('last_login_at')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->integer('modified_by')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('created_by')->nullable()->after('created_at');
+            $table->integer('updated_by')->nullable()->after('updated_at');
         });
 
         // admin user
