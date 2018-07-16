@@ -21,6 +21,7 @@
         "vue": "^2.5.16"
     },
     "dependencies": {
+        "office-ui-fabric-vue": "^1.1.0",
         "ts-loader": "^3.5.0",
         "typescript": "^2.9.2",
         "vuetify": "^1.0.19"
