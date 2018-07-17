@@ -20,15 +20,15 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->integer('status_id')->unsigned()->default(1);
+            $table->unsignedInteger('status_id')->default(1);
             $table->string('last_seen_version', 20)->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });
 
         Schema::table('cfg_users', function (Blueprint $table) {
-            $table->integer('created_by')->unsigned()->nullable()->after('created_at');
-            $table->integer('updated_by')->unsigned()->nullable()->after('updated_at');
+            $table->unsignedInteger('created_by')->nullable()->after('created_at');
+            $table->unsignedInteger('updated_by')->nullable()->after('updated_at');
 
             $table->foreign('created_by')->references('id')->on('cfg_users');
             $table->foreign('updated_by')->references('id')->on('cfg_users');

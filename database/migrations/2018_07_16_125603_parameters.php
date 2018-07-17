@@ -25,8 +25,8 @@ class Parameters extends Migration
         });
 
         Schema::table('cfg_parameters', function (Blueprint $table) {
-            $table->integer('created_by')->unsigned()->nullable()->after('created_at');
-            $table->integer('updated_by')->unsigned()->nullable()->after('updated_at');
+            $table->unsignedInteger('created_by')->nullable()->after('created_at');
+            $table->unsignedInteger('updated_by')->nullable()->after('updated_at');
 
             $table->foreign('created_by')->references('id')->on('cfg_users');
             $table->foreign('updated_by')->references('id')->on('cfg_users');
