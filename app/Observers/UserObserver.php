@@ -15,7 +15,7 @@ class UserObserver
      */
     public function deleting(User $user)
     {
-        if ($user->id === 100)
+        if ($user->id === env('ADMIN_ID', 99))
             return false;
     }
 }
