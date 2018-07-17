@@ -26,12 +26,21 @@ class User extends Authenticatable
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'status'
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'password', 'remember_token', 'status_id'
     ];
 
     /**
@@ -42,5 +51,15 @@ class User extends Authenticatable
     public function isITSupport()
     {
         return $this->id === env('ADMIN_ID', 99) ? true : false;
+    }
+
+    /**
+     * Get the status of the User
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\Common\Models\Status')->select(['id', 'description']);
     }
 }
