@@ -24,6 +24,7 @@ class CreateCfgStatusesTable extends Migration
             $table->timestamps();
 
             $table->index(['model', 'order', 'description']);
+            $table->unique(['model', 'description']);
         });
 
         $this->addCreatedByUpdatedByColumns('cfg_statuses');
