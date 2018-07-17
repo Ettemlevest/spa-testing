@@ -19,12 +19,15 @@ class Parameters extends Migration
         Schema::create('cfg_parameters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('category', 100);
-            $table->string('name');
+            $table->string('name', 100);
             $table->string('description');
             $table->string('value', 500);
             $table->string('default_value', 500);
-            $table->string('role')->nullable()->comment('User role needed for CRUD operations');
+            $table->string('role', 100)->nullable()->comment('User role needed for CRUD operations');
             $table->timestamps();
+
+            $table->index(['category', 'name', 'role']);
+            $table->unique(['category', 'name']);
         });
 
         $this->addCreatedByUpdatedByColumns('cfg_parameters');
