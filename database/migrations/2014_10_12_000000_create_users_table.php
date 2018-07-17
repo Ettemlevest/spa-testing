@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\UserStamps;
 
 class CreateUsersTable extends Migration
 {
+    use UserStamps;
+
     /**
      * Run the migrations.
      *
@@ -26,13 +29,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('cfg_users', function (Blueprint $table) {
-            $table->unsignedInteger('created_by')->nullable()->after('created_at');
-            $table->unsignedInteger('updated_by')->nullable()->after('updated_at');
-
-            $table->foreign('created_by')->references('id')->on('cfg_users');
-            $table->foreign('updated_by')->references('id')->on('cfg_users');
-        });
+        $this->addCreatedByUpdatedByColumns('cfg_users');
 
         $this->addAdminUser();
     }

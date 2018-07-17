@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\UserStamps;
 
 class Parameters extends Migration
 {
+    use UserStamps;
+
     /**
      * Run the migrations.
      *
@@ -20,17 +23,11 @@ class Parameters extends Migration
             $table->string('description');
             $table->string('value', 500);
             $table->string('default_value', 500);
-            $table->boolean('admin')->default(1);
+            $table->string('role')->nullable()->comment('User role needed for CRUD operations');
             $table->timestamps();
         });
 
-        Schema::table('cfg_parameters', function (Blueprint $table) {
-            $table->unsignedInteger('created_by')->nullable()->after('created_at');
-            $table->unsignedInteger('updated_by')->nullable()->after('updated_at');
-
-            $table->foreign('created_by')->references('id')->on('cfg_users');
-            $table->foreign('updated_by')->references('id')->on('cfg_users');
-        });
+        $this->addCreatedByUpdatedByColumns('cfg_parameters');
 
         $this->addDefaultParameters();
     }
@@ -63,7 +60,7 @@ class Parameters extends Migration
         //         'description' => '',
         //         'value' => '',
         //         'default_value' => '',
-        //         'admin' => 0,
+        //         'role' => null,
         //         'created_at' => $now,
         //         'created_by' => $admin_id,
         //         'updated_at' => $now,

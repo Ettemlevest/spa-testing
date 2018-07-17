@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'migrations' => 'migrations',
+    'migrations' => 'cfg_migrations',
 
     /*
     |--------------------------------------------------------------------------

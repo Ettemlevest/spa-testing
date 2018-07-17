@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Observers;
+namespace App\Common\Observers;
 
-use App\User;
+use App\Common\Models\User;
 
 class UserObserver
 {
@@ -10,7 +10,7 @@ class UserObserver
      * Prevent accidental admin user deletion
      * Handle the user "deleting" event.
      *
-     * @param  \App\User  $user
+     * @param  \App\Common\Models\User  $user
      * @return void
      */
     public function deleting(User $user)
