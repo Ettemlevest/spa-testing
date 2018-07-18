@@ -47,19 +47,19 @@ class CreateUsersTable extends Migration
     protected function addAdminUser()
     {
         $now = \Carbon\Carbon::now();
-        $admin_id = env('admin_id', 99);
+        $superuserID = env('SUPERUSER_ID', 99);
 
         DB::table('cfg_users')->insert([
-            'id' => env('admin_id', 99),
+            'id' => env('SUPERUSER_ID', 99),
             'last_name' => 'IT Support',
             'first_name' => '',
             'email' => 'support@example.org',
             'password' => Hash::make('secret'),
             'remember_token' => str_random(10),
             'created_at' => $now,
-            'created_by' => $admin_id,
+            'created_by' => $superuserID,
             'updated_at' => $now,
-            'updated_by' => $admin_id
+            'updated_by' => $superuserID
         ]);
     }
 }

@@ -53,7 +53,7 @@ class Parameters extends Migration
     protected function addDefaultParameters()
     {
         $now = \Carbon\Carbon::now();
-        $admin_id = env('admin_id', 99);
+        $superuserID = env('SUPERUSER_ID', 99);
 
         // example:
         // DB::table('cfg_parameters')->insert([
@@ -65,9 +65,9 @@ class Parameters extends Migration
         //         'default_value' => '',
         //         'role' => null,
         //         'created_at' => $now,
-        //         'created_by' => $admin_id,
+        //         'created_by' => $superuserID,
         //         'updated_at' => $now,
-        //         'updated_by' => $admin_id
+        //         'updated_by' => $superuserID
         //     ]
         // ]);
     }

@@ -58,13 +58,13 @@ class CreateCfgStatusesTable extends Migration
 
         // add created/updated columns
         $now = \Carbon\Carbon::now();
-        $adminUID = env('ADMIN_ID', 99);
+        $superuserID = env('SUPERUSER_ID', 99);
 
         foreach ($insertData as $key => $row) {
             $insertData[$key]['created_at'] = $now;
-            $insertData[$key]['created_by'] = $adminUID;
+            $insertData[$key]['created_by'] = $superuserID;
             $insertData[$key]['updated_at'] = $now;
-            $insertData[$key]['updated_by'] = $adminUID;
+            $insertData[$key]['updated_by'] = $superuserID;
         }
 
         DB::table('cfg_statuses')->insert($insertData);

@@ -7,15 +7,30 @@ use App\Common\Models\User;
 class UserObserver
 {
     /**
-     * Prevent accidental admin user deletion
+     * Prevent admin/super user updating
+     *
+     * @param \App\Common\Models\User $user
+     * @return boolean
+     */
+    public function updating(User $user)
+    {
+        if ($user->id === env('SUPERUSER_ID', 99) && Auth::id() !== env('SUPERUSER_ID', 99))
+            return false;
+
+        if ($user->id === env('ADMINUSER_ID', 100) && (Auth::id() !== env('ADMINUSER_ID', 100) || Auth::id() !== env('SUPERUSER_ID', 99)))
+            return false;
+    }
+
+    /**
+     * Prevent accidental admin/super user deletion
      * Handle the user "deleting" event.
      *
      * @param  \App\Common\Models\User  $user
-     * @return void
+     * @return boolean
      */
     public function deleting(User $user)
     {
-        if ($user->id === env('ADMIN_ID', 99))
+        if ($user->id === env('ADMINUSER_ID', 100) || $user->id === env('SUPERUSER_ID', 99))
             return false;
     }
 }

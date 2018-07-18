@@ -48,9 +48,19 @@ class User extends Authenticatable
      *
      * @return boolean
      */
-    public function isITSupport()
+    public function isSuperUser()
     {
-        return $this->id === env('ADMIN_ID', 99) ? true : false;
+        return $this->id === env('SUPERUSER_ID', 99) ? true : false;
+    }
+
+    /**
+     * Determine if current user is the first user
+     *
+     * @return boolean
+     */
+    public function isAdminUser()
+    {
+        return $this->id === env('ADMINUSER_ID', 100) ? true : false;
     }
 
     /**
