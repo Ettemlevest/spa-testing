@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\UserStamps;
 
 class CreateUsersTable extends Migration
 {
+    use UserStamps;
+
     /**
      * Run the migrations.
      *
@@ -13,37 +16,22 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('cfg_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('uid', 20)->unique();
             $table->string('last_name');
             $table->string('first_name');
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->boolean('active')->default(1);
+            $table->unsignedInteger('status_id')->default(1);
             $table->string('last_seen_version', 20)->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('created_by')->nullable()->after('created_at');
-            $table->integer('updated_by')->nullable()->after('updated_at');
-        });
+        $this->addCreatedByUpdatedByColumns('cfg_users');
 
-        // admin user
-        DB::table('users')->insert([
-            'id' => 100,
-            'uid' => 'admin',
-            'last_name' => 'IT Support',
-            'first_name' => '',
-            'email' => 'support@example.org',
-            'password' => Hash::make('secret'),
-            'remember_token' => str_random(10),
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()
-        ]);
+        $this->addAdminUser();
     }
 
     /**
@@ -53,6 +41,25 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('cfg_users');
+    }
+
+    protected function addAdminUser()
+    {
+        $now = \Carbon\Carbon::now();
+        $superuserID = env('SUPERUSER_ID', 99);
+
+        DB::table('cfg_users')->insert([
+            'id' => env('SUPERUSER_ID', 99),
+            'last_name' => 'IT Support',
+            'first_name' => '',
+            'email' => 'support@example.org',
+            'password' => Hash::make('secret'),
+            'remember_token' => str_random(10),
+            'created_at' => $now,
+            'created_by' => $superuserID,
+            'updated_at' => $now,
+            'updated_by' => $superuserID
+        ]);
     }
 }

@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use App\User;
-use App\Observers\UserObserver;
+use App\Common\Models\User;
+use App\Common\Observers\UserObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
