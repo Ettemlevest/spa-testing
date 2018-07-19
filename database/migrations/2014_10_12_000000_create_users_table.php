@@ -22,16 +22,19 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->timestamp('password_changed_at');
             $table->rememberToken();
             $table->unsignedInteger('status_id')->default(1);
             $table->string('last_seen_version', 20)->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
+
+            $table->index(['password_changed_at']);
         });
 
         $this->addCreatedByUpdatedByColumns('cfg_users');
 
-        $this->addAdminUser();
+        $this->addSuperUser();
     }
 
     /**
@@ -44,7 +47,12 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('cfg_users');
     }
 
-    protected function addAdminUser()
+    /**
+     * Add first user (SuperUser) to the users table.
+     *
+     * @return void
+     */
+    protected function addSuperUser()
     {
         $now = \Carbon\Carbon::now();
         $superuserID = env('SUPERUSER_ID', 99);
@@ -55,6 +63,7 @@ class CreateUsersTable extends Migration
             'first_name' => '',
             'email' => 'support@example.org',
             'password' => Hash::make('secret'),
+            'password_changed_at' => $now,
             'remember_token' => str_random(10),
             'created_at' => $now,
             'created_by' => $superuserID,
