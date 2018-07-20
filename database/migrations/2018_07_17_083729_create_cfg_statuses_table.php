@@ -3,12 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\UserStamps;
 
 class CreateCfgStatusesTable extends Migration
 {
-    use UserStamps;
-
     /**
      * Run the migrations.
      *
@@ -21,13 +18,11 @@ class CreateCfgStatusesTable extends Migration
             $table->string('model', 100);
             $table->string('description');
             $table->unsignedSmallInteger('order');
-            $table->timestamps();
+            $table->auditable();
 
             $table->index(['model', 'order', 'description']);
             $table->unique(['model', 'description']);
         });
-
-        $this->addCreatedByUpdatedByColumns('cfg_statuses');
 
         $this->addDefaultStatuses();
 

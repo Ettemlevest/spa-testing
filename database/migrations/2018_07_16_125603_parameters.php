@@ -3,12 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\UserStamps;
 
 class Parameters extends Migration
 {
-    use UserStamps;
-
     /**
      * Run the migrations.
      *
@@ -24,13 +21,11 @@ class Parameters extends Migration
             $table->string('value', 500);
             $table->string('default_value', 500);
             $table->string('role', 100)->nullable()->comment('User role needed for CRUD operations');
-            $table->timestamps();
+            $table->auditable();
 
             $table->index(['category', 'name', 'role']);
             $table->unique(['category', 'name']);
         });
-
-        $this->addCreatedByUpdatedByColumns('cfg_parameters');
 
         $this->addDefaultParameters();
     }

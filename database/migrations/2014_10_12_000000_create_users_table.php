@@ -3,12 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\UserStamps;
 
 class CreateUsersTable extends Migration
 {
-    use UserStamps;
-
     /**
      * Run the migrations.
      *
@@ -27,12 +24,10 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('status_id')->default(1);
             $table->string('last_seen_version', 20)->nullable();
             $table->timestamp('last_login_at')->nullable();
-            $table->timestamps();
+            $table->auditable();
 
             $table->index(['password_changed_at']);
         });
-
-        $this->addCreatedByUpdatedByColumns('cfg_users');
 
         $this->addSuperUser();
     }
