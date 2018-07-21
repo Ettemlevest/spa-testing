@@ -4,10 +4,11 @@ namespace App\Common\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * Database table name for the model.
@@ -15,6 +16,13 @@ class User extends Authenticatable
      * @var string
      */
     protected $table = 'cfg_users';
+
+    /**
+     * Set default guard for the model.
+     *
+     * @var string
+     */
+    protected $guard_name = 'api';
 
     /**
      * The attributes that are mass assignable.
