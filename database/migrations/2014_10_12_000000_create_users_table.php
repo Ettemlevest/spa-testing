@@ -50,10 +50,10 @@ class CreateUsersTable extends Migration
     protected function addSuperUser()
     {
         $now = \Carbon\Carbon::now();
-        $superuserID = env('SUPERUSER_ID', 99);
+        $superuserID = config('common.superuser_id', 99);
 
         DB::table('cfg_users')->insert([
-            'id' => env('SUPERUSER_ID', 99),
+            'id' => $superuserID,
             'last_name' => 'IT Support',
             'first_name' => '',
             'email' => 'support@example.org',

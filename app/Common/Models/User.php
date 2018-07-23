@@ -58,7 +58,7 @@ class User extends Authenticatable
      */
     public function isSuperUser()
     {
-        return $this->id === env('SUPERUSER_ID', 99) ? true : false;
+        return $this->id === config('common.superuser_id', 99) ? true : false;
     }
 
     /**
@@ -68,7 +68,7 @@ class User extends Authenticatable
      */
     public function isAdminUser()
     {
-        return $this->id === env('ADMINUSER_ID', 100) ? true : false;
+        return $this->id === config('common.adminuser_id', 100) ? true : false;
     }
 
     /**
