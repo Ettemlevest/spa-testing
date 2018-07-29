@@ -14,10 +14,10 @@ class UserObserver
      */
     public function updating(User $user)
     {
-        if ($user->id === config('common.superuser_id', 99) && Auth::id() !== config('common.superuser_id', 99))
+        if ($user->id === (int)config('common.superuser_id', 99) && Auth::id() !== (int)config('common.superuser_id', 99))
             return false;
 
-        if ($user->id === config('common.superuser_id', 100) && (Auth::id() !== config('common.superuser_id', 100) || Auth::id() !== config('common.superuser_id', 99)))
+        if ($user->id === (int)config('common.superuser_id', 100) && (Auth::id() !== (int)config('common.superuser_id', 100) || Auth::id() !== config('common.superuser_id', 99)))
             return false;
     }
 
@@ -30,7 +30,7 @@ class UserObserver
      */
     public function deleting(User $user)
     {
-        if ($user->id === config('common.superuser_id', 100) || $user->id === config('common.superuser_id', 99))
+        if ($user->id === (int)config('common.superuser_id', 100) || $user->id === (int)config('common.superuser_id', 99))
             return false;
     }
 }
