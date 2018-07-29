@@ -60,6 +60,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * Attributes that should mutatod to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'password_changed_at'
+    ];
+
+    /**
      * Determine if current user is IT Support
      *
      * @return boolean
