@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Helpers\UserStamps;
 
-class Parameters extends Migration
+class CreateCfgPasswordResetsTable extends Migration
 {
     use UserStamps;
 
