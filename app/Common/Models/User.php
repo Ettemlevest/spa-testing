@@ -39,7 +39,14 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = [
+    protected $with = [];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
         'status'
     ];
 
@@ -49,7 +56,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'status_id'
+        'password', 'remember_token'
     ];
 
     /**
@@ -57,9 +64,9 @@ class User extends Authenticatable
      *
      * @return boolean
      */
-    public function isSuperUser()
+    public function isSuper()
     {
-        return $this->id === config('common.superuser_id', 99) ? true : false;
+        return $this->id === (int)config('common.superuser_id', 99) ? true : false;
     }
 
     /**
@@ -67,18 +74,28 @@ class User extends Authenticatable
      *
      * @return boolean
      */
-    public function isAdminUser()
+    public function isAdmin()
     {
-        return $this->id === config('common.adminuser_id', 100) ? true : false;
+        return $this->id === (int)config('common.adminuser_id', 100) ? true : false;
     }
 
     /**
      * Get the status of the User
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return string
      */
-    public function status()
+    public function getStatusAttribute()
     {
-        return $this->belongsTo('App\Common\Models\Status')->select(['id', 'description']);
+        return Status::where('id', $this->attributes['status_id'])->first()->description;
+    }
+
+    /**
+     * Set the user's status.
+     *
+     * @param string $value
+     */
+    public function setStatusAttribute(string $value)
+    {
+        $this->attributes['status_id'] = Status::where('description', $value)->firstOrFail()->id;
     }
 }
