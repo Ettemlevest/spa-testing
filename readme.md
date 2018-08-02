@@ -23,6 +23,12 @@ Populate database with **test** data:
 php artisan db:seed
 ```
 
+Generate oauth client informations
+
+```bash
+php artisan passport:install
+```
+
 Optimizations for production environment:
 
 ```bash
