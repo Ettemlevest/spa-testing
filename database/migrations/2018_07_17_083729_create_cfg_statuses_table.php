@@ -38,6 +38,10 @@ class CreateCfgStatusesTable extends Migration
      */
     public function down()
     {
+        Schema::table('cfg_users', function (Blueprint $table) {
+            $table->dropForeign('cfg_users_status_id_foreign');
+        });
+
         Schema::dropIfExists('cfg_statuses');
     }
 
