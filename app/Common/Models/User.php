@@ -95,7 +95,7 @@ class User extends Authenticatable
      */
     public function getStatusAttribute()
     {
-        return Status::where('id', $this->attributes['status_id'])->first()->description;
+        return Status::where('id', $this->attributes['status_id'])->first()->name;
     }
 
     /**
@@ -105,6 +105,6 @@ class User extends Authenticatable
      */
     public function setStatusAttribute(string $value)
     {
-        $this->attributes['status_id'] = Status::where('description', $value)->firstOrFail()->id;
+        $this->attributes['status_id'] = Status::where('name', $value)->firstOrFail()->id;
     }
 }

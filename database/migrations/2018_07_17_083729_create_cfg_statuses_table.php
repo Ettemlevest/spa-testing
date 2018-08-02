@@ -16,12 +16,12 @@ class CreateCfgStatusesTable extends Migration
         Schema::create('cfg_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('model', 100);
-            $table->string('description');
+            $table->string('name');
             $table->unsignedSmallInteger('order');
             $table->auditable();
 
-            $table->index(['model', 'order', 'description']);
-            $table->unique(['model', 'description']);
+            $table->index(['model', 'order', 'name']);
+            $table->unique(['model', 'name']);
         });
 
         $this->addDefaultStatuses();
@@ -49,10 +49,10 @@ class CreateCfgStatusesTable extends Migration
     {
         $insertData = [
             // User statuses
-            ['model' => App\Common\Models\User::class, 'description' => 'Active', 'order' => 1],
-            ['model' => App\Common\Models\User::class, 'description' => 'Inactive', 'order' => 2],
-            ['model' => App\Common\Models\User::class, 'description' => 'Locked', 'order' => 3],
-            ['model' => App\Common\Models\User::class, 'description' => 'Archived', 'order' => 4],
+            ['model' => App\Common\Models\User::class, 'name' => 'active', 'order' => 1],
+            ['model' => App\Common\Models\User::class, 'name' => 'inactive', 'order' => 2],
+            ['model' => App\Common\Models\User::class, 'name' => 'locked', 'order' => 3],
+            ['model' => App\Common\Models\User::class, 'name' => 'archived', 'order' => 4],
         ];
 
         // add created/updated columns
