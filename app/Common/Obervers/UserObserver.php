@@ -2,6 +2,7 @@
 
 namespace App\Common\Observers;
 
+use Auth;
 use App\Common\Models\User;
 
 class UserObserver
