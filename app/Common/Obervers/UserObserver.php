@@ -18,7 +18,7 @@ class UserObserver
         if ($user->id === (int)config('common.superuser_id', 99) && Auth::id() !== (int)config('common.superuser_id', 99))
             return false;
 
-        if ($user->id === (int)config('common.superuser_id', 100) && (Auth::id() !== (int)config('common.superuser_id', 100) || Auth::id() !== config('common.superuser_id', 99)))
+        if ($user->id === (int)config('common.adminuser_id', 100) && (Auth::id() !== (int)config('common.adminuser_id', 100) || Auth::id() !== (int)config('common.superuser_id', 99)))
             return false;
     }
 
