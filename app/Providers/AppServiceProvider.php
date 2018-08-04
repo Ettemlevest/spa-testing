@@ -27,16 +27,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Blueprint::macro('auditable', function () {
-            $this->timestamp('created_at')->nullable();
-            $this->unsignedInteger('created_by')->nullable()->index();
-            $this->timestamp('updated_at')->nullable();
-            $this->unsignedInteger('updated_by')->nullable()->index();
-
+        Blueprint::macro('auditable', function (?bool $create = true, ?bool $update = true) {
             $usersTableName = (new User)->getTable();
 
-            $this->foreign('created_by')->references('id')->on($usersTableName);
-            $this->foreign('updated_by')->references('id')->on($usersTableName);
+            if ($create) {
+                $this->timestamp('created_at')->nullable();
+                $this->unsignedInteger('created_by')->nullable()->index();
+                $this->foreign('created_by')->references('id')->on($usersTableName);
+            }
+
+            if ($update) {
+                $this->timestamp('updated_at')->nullable();
+                $this->unsignedInteger('updated_by')->nullable()->index();
+                $this->foreign('updated_by')->references('id')->on($usersTableName);
+            }
         });
 
         Blueprint::macro('dropAuditable', function () {
