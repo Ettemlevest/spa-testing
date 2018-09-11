@@ -15,8 +15,7 @@ class CreateCfgUsersTable extends Migration
     {
         Schema::create('cfg_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('last_name');
-            $table->string('first_name');
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamp('password_changed_at');
@@ -54,8 +53,7 @@ class CreateCfgUsersTable extends Migration
 
         DB::table('cfg_users')->insert([
             'id' => $superuserID,
-            'last_name' => 'IT Support',
-            'first_name' => '',
+            'name' => 'IT Support',
             'email' => 'support@example.org',
             'password' => Hash::make('secret'),
             'password_changed_at' => $now,
