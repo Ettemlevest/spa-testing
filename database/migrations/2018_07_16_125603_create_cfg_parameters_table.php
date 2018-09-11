@@ -19,7 +19,7 @@ class CreateCfgParametersTable extends Migration
             $table->string('name', 100);
             $table->string('value', 500);
             $table->string('default_value', 500);
-            $table->string('role')->nullable()->comment('Comma separated list of user roles needed for CRUD operations');
+            $table->string('role')->nullable()->comment('User role needed for CRUD operations on parameter');
             $table->auditable();
 
             $table->index(['category', 'name', 'role']);
